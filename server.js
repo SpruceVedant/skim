@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const path = require('path');
+const Cors = require('cors');
 
 const PORT = process.env.PORT || 3000;
 app.use(express.static('public'));
@@ -9,6 +10,15 @@ app.use(express.static('public'));
 
 const connectDB = require('./config/db');
 connectDB();
+
+// Cors 
+const CorsOptions = {
+    origin: process.env.ALLOWED_CLIENTS.split(','),
+    // ['http://localhost:3000', 'http://localhost:3001']
+     
+}
+app.use(Cors(CorsOptions));
+
 
 // Template engine
 app.set('views', path.join(__dirname, '/views'));
